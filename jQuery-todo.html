@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <script src="jquery-3.3.1.min.js"></script>
+        <script src="jquery-ui.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#button').click(function() {
+                    var text = document.getElementById('task').value;
+                    if(text.length >= 1) {
+                        $('ol').append('<li>' +text +'</li>');
+                        $(document).find('input[type=text], textarea').val('');
+                    }
+                });
+
+                $(document).on('click', 'li', function() {
+                    $(this).toggleClass('strike');
+                });
+
+                $(document).on('dblclick', 'li', function() {
+                    $(this).slideToggle('slow');
+                })
+
+                $('ol').sortable();
+            });
+        </script>
+
+        <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    </head>
+
+    <style>
+        body {
+            font-family: 'Fjalla One', sans-serif;
+            background: white;
+
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        #display {
+            width: 500px;
+            color: white;
+            background: black;
+            padding: 50px;
+            margin: auto;
+            margin-top: 50px;
+            border-radius: 15px;
+        }
+
+        #button {
+            border-radius: 5px;
+            display: inline-block;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin: 5px;
+            transition-duration: 0.5s;
+            background-color: red;
+        }
+
+        #button:hover {
+            background-color: green;
+            cursor: pointer;
+        }
+
+        ol li {
+            padding: 4px;
+            background-color: rgb(35, 139, 180);
+            border-radius: 5px;
+            width: 390px;
+        }
+
+        ol li:nth-child(even) {
+            background-color: rgb(23, 199, 97);
+            border-radius: 5px;
+        }
+
+        li:hover {
+            cursor: pointer;
+        }
+
+        #task {
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .strike {
+            text-decoration: line-through;
+        }
+    </style>
+
+    <body>
+        <div id="display">
+            <h1>jQuery To-Do List</h1>
+            <p>Enter in tasks, click to mark as completed, and double-click to delete.</p>
+
+            <input type="text" id="task">
+            <div id="button">Add</div>
+            <br>
+            <ol></ol>
+        </div>
+    </body>
+</html>
