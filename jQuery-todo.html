@@ -7,7 +7,7 @@
                 $('#button').click(function() {
                     var text = document.getElementById('task').value;
                     if(text.length >= 1) {
-                        $('ol').append('<li>' +text +'</li>');
+                        $('#list').append('<li>' +text +'</li>');
                         $(document).find('input[type=text], textarea').val('');
                     }
                 });
@@ -18,9 +18,32 @@
 
                 $(document).on('dblclick', 'li', function() {
                     $(this).slideToggle('slow');
-                })
+                    setTimeout(function() {
+                        $(this).remove()
+                    }, 10);
+                });
 
                 $('ol').sortable();
+
+                $('#completedlist').droppable({
+                    accept: 'li',
+                    drop: function(event, ui) {
+                        var droppable = $(this);
+                        var draggable = ui.draggable;
+                        $("#completedlist").append('<li>' +draggable.text() +'</li>');
+                        $(draggable).remove();
+                    }
+                });
+
+                $('#list').droppable({
+                    accept: 'li',
+                    drop: function(event, ui) {
+                        var droppable = $(this);
+                        var draggable = ui.draggable;
+                        $("#list").append('<li>' +draggable.text() +'</li>');
+                        $(draggable).remove();
+                    }
+                });
             });
         </script>
 
@@ -41,7 +64,7 @@
         }
         
         #display {
-            width: 500px;
+            width: 70%;
             color: white;
             background: black;
             padding: 50px;
@@ -66,11 +89,17 @@
             cursor: pointer;
         }
 
+        ol {
+            height: 30%;
+            width: 300%;
+        }
+
         ol li {
-            padding: 4px;
+            padding: 5px;
+            padding-right: 20%;
             background-color: rgb(35, 139, 180);
             border-radius: 5px;
-            width: 390px;
+            width: 55%;
         }
 
         ol li:nth-child(even) {
@@ -90,6 +119,50 @@
         .strike {
             text-decoration: line-through;
         }
+
+        #listtitles {
+            margin-top: 3%;
+            display:flex;
+        }
+
+        #listtitleleft {
+            flex-direction: row;
+            width: 40%;
+            margin: auto;
+        }
+
+        #listtitleright {
+            flex-direction: row;
+            width: 40%;
+            margin: auto;
+        }
+
+        #listcontainer {
+            display: flex;
+        }
+
+        #containerleft {
+            display: flex;
+            flex-direction: row;
+            width: 40%;
+            background: black;
+            border: 5px solid white;
+            border-radius: 15px;
+            margin: auto;
+            overflow: auto;
+            
+        }
+
+        #containerright {
+            display: flex;
+            flex-direction: row;
+            width: 40%;
+            background: black;
+            border: 5px solid white;
+            border-radius: 15px;
+            margin: auto;
+            overflow: auto;
+        }
     </style>
 
     <body>
@@ -100,7 +173,25 @@
             <input type="text" id="task">
             <div id="button">Add</div>
             <br>
-            <ol></ol>
+            <div id="listtitles">
+                <div id="listtitleleft">
+                    <h3>Not Completed</h3>
+                </div>
+
+                <div id="listtitleright">
+                        <h3>Completed</h3>
+                </div>
+            </div>
+
+            <div id="listcontainer">
+                <div id="containerleft">
+                        <ol id="list"></ol>
+                </div>
+        
+                <div id="containerright">
+                    <ol id="completedlist"></ol>
+                </div>
+            </div>
         </div>
     </body>
 </html>
